@@ -1,19 +1,18 @@
 
 
-
-//Definición de la Clase Lista
+//Definiciï¿½n de la Clase Lista
  public class ListaDoble
 {
-  public NodosListaD PrimeroDoble;
+  public NodosListaDoble PrimeroDoble;
   String Nombre;
 
 //Constructor construye una lista vacia con un nombre s
  public ListaDoble (String s)
 { Nombre = s;
-  PrimeroDoble =null;
+  PrimeroDoble = null;
 }
 
-//Retorna True si Lista Vacía
+//Retorna True si Lista Vacï¿½a
  public boolean VaciaLista () {return PrimeroDoble == null;}
 
 // Imprime el contenido de la lista
@@ -26,12 +25,12 @@
   else
   {
 	  System.out.print( "La  " +  Nombre  +"  es:  ");
-      NodosListaD Actual = PrimeroDoble;
+      NodosListaDoble Actual = PrimeroDoble;
 
      while (Actual != null)
 	 {
-      System.out.print (Actual.cod.toString() + " ");
-      System.out.print (Actual.ban.toString() + " ");
+      System.out.print (Actual.regla.toString() + " ");
+      System.out.print (Actual.check.toString() + " ");
       Actual=Actual.siguiente;
      }
 
@@ -45,68 +44,40 @@
 public ListaDoble(){ this ("Lista");}
 
 //Inserta un Elemento al Frente de la Lista
-//Si esta vacía PrimerNodo y UltimoNodo se refieren al nuevo nodo. Si no PrimerNodo se refiere al nuevo nodo.
+//Si esta vacï¿½a PrimerNodo y UltimoNodo se refieren al nuevo nodo. Si no PrimerNodo se refiere al nuevo nodo.
 
-public void InsertaInicio (String oba, String am, String ye, String ho)
+public void InsertaInicio (String r)
 { if (VaciaLista())
-   PrimeroDoble = new NodosListaD (oba, am, ye, ho);
+   PrimeroDoble = new NodosListaDoble (r);
   else
-   PrimeroDoble = new NodosListaD (oba, am, ye, ho, PrimeroDoble);
+   PrimeroDoble = new NodosListaDoble (r, PrimeroDoble);
    PrimeroDoble.siguiente.anterior =PrimeroDoble;
 }
 
 
 //Inserta al Final de la Lista
-//Si la lista se encuentra vacía, el PrimerNodo y el UltimoNodo se refieren al nuevo nodo. Si no, la variable de siguiente de UltimoNodo se refiere al nuevo nodo.
-public void InsertaFinal(String oba, String am, String ye, String ho)
+//Si la lista se encuentra vacï¿½a, el PrimerNodo y el UltimoNodo se refieren al nuevo nodo. Si no, la variable de siguiente de UltimoNodo se refiere al nuevo nodo.
+public void InsertaFinal(String r)
 { if ( VaciaLista())
-     PrimeroDoble = new NodosListaD (oba, am, ye, ho);
+     PrimeroDoble = new NodosListaDoble (r);
   else
      {
-      NodosListaD aux= PrimeroDoble;
+      NodosListaDoble aux= PrimeroDoble;
       while (aux.siguiente != null)
          aux = aux.siguiente;
          //Primera Forma
-         aux.siguiente = new NodosListaD (oba, am, ye, ho);
+         aux.siguiente = new NodosListaDoble (r);
          aux.siguiente.anterior =aux;
     }
 }//Fin de InsertaFinal
 
-public void InsertaFinal(String oba, String am)
-{ if ( VaciaLista())
-     PrimeroDoble = new NodosListaD (oba, am);
-  else
-     {
-      NodosListaD aux= PrimeroDoble;
-      while (aux.siguiente != null)
-         aux = aux.siguiente;
-         //Primera Forma
-         aux.siguiente = new NodosListaD (oba, am);
-         aux.siguiente.anterior =aux;
-    }
-}//Fin de InsertaFinal
-
-public void InsertaFinal(String codBan, String nom,String tar, String mon, String tar1, String mon1, String tar2, String mon2)
-{ if ( VaciaLista())
-     PrimeroDoble = new NodosListaD (codBan,nom,tar, mon, tar1, mon1, tar2, mon2);
-  else
-     {
-      NodosListaD aux= PrimeroDoble;
-      while (aux.siguiente != null)
-         aux = aux.siguiente;
-         //Primera Forma
-         aux.siguiente = new NodosListaD (codBan,nom,tar, mon, tar1, mon1, tar2, mon2);
-         aux.siguiente.anterior =aux;
-    }
-}//Fin de InsertaFinal
-
-//Inserta un Elemento en una posición dada
-//Si esta vacía PrimerNodo y UltimoNodo se refieren al nuevo nodo.
+//Inserta un Elemento en una posiciï¿½n dada
+//Si esta vacï¿½a PrimerNodo y UltimoNodo se refieren al nuevo nodo.
 //Si no PrimerNodo se refiere al nuevo nodo.
 
-public void InsertaMedio (String oba, String am, String ye, String ho,int Posicion)
+public void InsertaMedio (String r,int Posicion)
 { if (VaciaLista())
-      PrimeroDoble =  new NodosListaD (oba, am, ye, ho);
+      PrimeroDoble =  new NodosListaDoble (r);
   else
     { if (Posicion<=1)
       {
@@ -115,19 +86,18 @@ public void InsertaMedio (String oba, String am, String ye, String ho,int Posici
         Nuevo.siguiente = PrimeroDoble;
         PrimeroDoble = Nuevo;
         PrimeroDoble.siguiente.anterior= PrimeroDoble;*/
-        InsertaInicio (oba, am, ye, ho);
-     
+        InsertaInicio (r);
 
  	  }
      else
       {
-	 NodosListaD Aux = PrimeroDoble;
+	 NodosListaDoble Aux = PrimeroDoble;
          int i = 2;
          while ( (i != Posicion) & (Aux.siguiente != null))
          {  i++;
             Aux = Aux.siguiente;
          }
-         NodosListaD Nuevo = new NodosListaD(oba, am, ye, ho);
+         NodosListaDoble Nuevo = new NodosListaDoble(r);
          Nuevo.siguiente = Aux.siguiente;;
          Aux.siguiente =Nuevo;
          Nuevo.anterior=Aux;
@@ -139,7 +109,7 @@ public void InsertaMedio (String oba, String am, String ye, String ho,int Posici
 
 
 //Eliminar al Inicio
-//Debe tomar en cuenta si la lista se encuentra vacía y producir una excepción, en caso contrario si PrimerNodo y UltimoNodo referencian al mismo nodo, ambos deben ser null y sino  primernodo será igual a PrimerNodo.siguiente
+//Debe tomar en cuenta si la lista se encuentra vacï¿½a y producir una excepciï¿½n, en caso contrario si PrimerNodo y UltimoNodo referencian al mismo nodo, ambos deben ser null y sino  primernodo serï¿½ igual a PrimerNodo.siguiente
 
 public void EliminaInicio()
 { 
@@ -156,7 +126,7 @@ public void EliminaInicio()
 }
 
 //Eliminar al Final
-//Debe tomar en cuenta si la lista se encuentra vacía y producir una excepción, en caso contrario si PrimerNodo y UltimoNodo referencian al mismo nodo, ambos deben ser null y sino  ultimonodo en el campo siguiente será nulo
+//Debe tomar en cuenta si la lista se encuentra vacï¿½a y producir una excepciï¿½n, en caso contrario si PrimerNodo y UltimoNodo referencian al mismo nodo, ambos deben ser null y sino  ultimonodo en el campo siguiente serï¿½ nulo
 
 public void EliminaFinal ()
 { 
@@ -170,7 +140,7 @@ public void EliminaFinal ()
       else
       { 
        // Primera Forma
-        NodosListaD Actual =PrimeroDoble;
+        NodosListaDoble Actual =PrimeroDoble;
         
          while (Actual.siguiente.siguiente != null)
             Actual = Actual.siguiente;
@@ -190,8 +160,8 @@ public void EliminaFinal ()
  }
 }
 
-//Elimina un Elemento en una posición dada
-//Si esta vacía PrimerNodo y UltimoNodo se refieren al nuevo nodo.
+//Elimina un Elemento en una posiciï¿½n dada
+//Si esta vacï¿½a PrimerNodo y UltimoNodo se refieren al nuevo nodo.
 //Si no PrimerNodo se refiere al nuevo nodo.
 
 public void EliminaMedio (int Posicion)
@@ -201,8 +171,8 @@ public void EliminaMedio (int Posicion)
 
     else
    {
-    NodosListaD Aux =null;
-     NodosListaD Actual = PrimeroDoble;
+    NodosListaDoble Aux = null;
+     NodosListaDoble Actual = PrimeroDoble;
      int i =1;
      while (( i != Posicion) & (Actual.siguiente != null))
      { i++;
@@ -224,8 +194,8 @@ public void EliminaMedio (int Posicion)
 
 public void Invertir()// invierte las referencias
 {
-  NodosListaD sig = PrimeroDoble;
-  NodosListaD anterior = null;
+  NodosListaDoble sig = PrimeroDoble;
+  NodosListaDoble anterior = null;
   while(!(VaciaLista()))
   {
     sig = PrimeroDoble.siguiente;
@@ -237,15 +207,15 @@ public void Invertir()// invierte las referencias
 
 public boolean EstaElemento (String Elem)
 {
-	NodosListaD aux;
+	NodosListaDoble aux;
 	
 	if  (!( VaciaLista()))
 	{
 		aux= PrimeroDoble;
-		while ((!aux.cod.equals(Elem))&&(aux.siguiente !=null)){
+		while ((!aux.regla.equals(Elem))&&(aux.siguiente !=null)){
 			aux=aux.siguiente;
 	    }
-	    if (aux.cod.equals(Elem))
+	    if (aux.regla.equals(Elem))
 	    {
 	    	return true;
 	    }
