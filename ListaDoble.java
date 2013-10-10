@@ -30,7 +30,7 @@
      while (Actual != null)
 	 {
       System.out.print (Actual.regla.toString() + " ");
-      System.out.print (Actual.check.toString() + " ");
+      System.out.print (Actual.argumento.toString() + " ");
       Actual=Actual.siguiente;
      }
 
@@ -46,27 +46,27 @@ public ListaDoble(){ this ("Lista");}
 //Inserta un Elemento al Frente de la Lista
 //Si esta vac�a PrimerNodo y UltimoNodo se refieren al nuevo nodo. Si no PrimerNodo se refiere al nuevo nodo.
 
-public void InsertaInicio (String r)
+public void InsertaInicio (String r, String a)
 { if (VaciaLista())
-   PrimeroDoble = new NodosListaDoble (r);
+   PrimeroDoble = new NodosListaDoble (r,a);
   else
-   PrimeroDoble = new NodosListaDoble (r, PrimeroDoble);
+   PrimeroDoble = new NodosListaDoble (r, a, PrimeroDoble);
    PrimeroDoble.siguiente.anterior =PrimeroDoble;
 }
 
 
 //Inserta al Final de la Lista
 //Si la lista se encuentra vac�a, el PrimerNodo y el UltimoNodo se refieren al nuevo nodo. Si no, la variable de siguiente de UltimoNodo se refiere al nuevo nodo.
-public void InsertaFinal(String r)
+public void InsertaFinal(String r, String a)
 { if ( VaciaLista())
-     PrimeroDoble = new NodosListaDoble (r);
+     PrimeroDoble = new NodosListaDoble (r,a);
   else
      {
       NodosListaDoble aux= PrimeroDoble;
       while (aux.siguiente != null)
          aux = aux.siguiente;
          //Primera Forma
-         aux.siguiente = new NodosListaDoble (r);
+         aux.siguiente = new NodosListaDoble (r,a);
          aux.siguiente.anterior =aux;
     }
 }//Fin de InsertaFinal
@@ -75,9 +75,9 @@ public void InsertaFinal(String r)
 //Si esta vac�a PrimerNodo y UltimoNodo se refieren al nuevo nodo.
 //Si no PrimerNodo se refiere al nuevo nodo.
 
-public void InsertaMedio (String r,int Posicion)
+public void InsertaMedio (String r, String a,int Posicion)
 { if (VaciaLista())
-      PrimeroDoble =  new NodosListaDoble (r);
+      PrimeroDoble =  new NodosListaDoble (r,a);
   else
     { if (Posicion<=1)
       {
@@ -86,7 +86,7 @@ public void InsertaMedio (String r,int Posicion)
         Nuevo.siguiente = PrimeroDoble;
         PrimeroDoble = Nuevo;
         PrimeroDoble.siguiente.anterior= PrimeroDoble;*/
-        InsertaInicio (r);
+        InsertaInicio (r,a);
 
  	  }
      else
@@ -97,7 +97,7 @@ public void InsertaMedio (String r,int Posicion)
          {  i++;
             Aux = Aux.siguiente;
          }
-         NodosListaDoble Nuevo = new NodosListaDoble(r);
+         NodosListaDoble Nuevo = new NodosListaDoble(r,a);
          Nuevo.siguiente = Aux.siguiente;;
          Aux.siguiente =Nuevo;
          Nuevo.anterior=Aux;
@@ -225,4 +225,51 @@ public boolean EstaElemento (String Elem)
 	else
 	     return false;
 }// Fin de EstaElemento	
+
+//Metodo que realiza el backtraking
+public void atras(ListaDoble lista){
+	NodosListaDoble pt = lista.PrimeroDoble;
+	//Ciclo que va revisa la ultima regla que fue exitosa
+	while (pt.check != false){
+		pt = pt.anterior;
+	}//Fin del while
+	
+	//if que envia como parametro la ultima regla que fue exitosa
+	if (pt.check == true){
+		if (pt.regla == "write"){
+			pt.check = false;
+			pt = pt.anterior;
+		}//Fin del if 1
+		
+		if (pt.regla == "nl"){
+			pt.check = false;
+			pt = pt.anterior;
+		}//Fin del if 2
+		
+	}//Fin del if principal
+	
+}//Fin de atras
+
+//Metodo que realiza la evaluacion de las premisas
+public void evaluar(){
+	NodosListaDoble pt = this.PrimeroDoble;
+	while (pt!=null){
+		if (pt.regla == "write"){
+			System.out.println(pt.argumento);
+			pt.check = true;
+			pt = pt.siguiente;
+		}//Fin del if 1
+		
+		else {
+			if (pt.regla == "nl"){
+				System.out.println('\n');
+				pt.check = true;
+				pt = pt.siguiente;
+			}//Fin del if 2
+			else
+				pt = pt.siguiente;
+		}//Fin del else
+	}//Fin del while
+}//Fin de evaluar
+
 }//Fin de la clase
