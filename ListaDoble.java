@@ -272,4 +272,98 @@ public void evaluar(){
 	}//Fin del while
 }//Fin de evaluar
 
+	public void Inserta(String x){
+		if (VaciaLista())
+			PrimeroDoble = new NodosListaDoble(x);
+		else{
+			NodosListaDoble aux= PrimeroDoble;
+		    while (aux.siguiente != null)
+		         aux = aux.siguiente;
+		         //Primera Forma
+		    aux.siguiente = new NodosListaDoble (x);
+		}
+	}
+
+	public void InsertaLista(ListaDoble x){
+		if (VaciaLista())
+			PrimeroDoble = new NodosListaDoble(x);
+		else{
+			NodosListaDoble aux= PrimeroDoble;
+		    while (aux.siguiente != null)
+		         aux = aux.siguiente;
+		         //Primera Forma
+		    aux.siguiente = new NodosListaDoble (x);
+		}
+	}
+	
+	public String buscarUltimo(){
+		NodosListaDoble aux = PrimeroDoble;
+		while(aux.siguiente!=null)
+			aux=aux.siguiente;
+		return aux.argumento;
+	}
+	
+public ListaDoble separarPredicados(String linea){
+	ListaDoble List = new ListaDoble();
+	StringTokenizer predicado=new StringTokenizer(linea,":- ");
+	//Obtener el nombre del predicado en un nodo
+	List.Inserta(predicado.nextToken());
+	String nuevo=predicado.nextToken();
+	while(predicado.hasMoreTokens()){
+			nuevo=nuevo+" "+predicado.nextToken();
+        }
+	//Inserta como un solo nodo la sintaxis del predicado ":-"
+	List.Inserta(":-");
+	StringTokenizer antecedentes = new StringTokenizer(nuevo,",");
+	//Saca cada antecedente y lo guarda en un nodo aparte, omite las comas
+	//que separan cada antecedente
+	while(antecedentes.hasMoreTokens()){
+		String aux= antecedentes.nextToken();
+		if (aux.equals("nl")|| aux.equals("fail")||aux.equals("nl.")|| aux.equals("fail."))
+			List.Inserta(aux);
+		else {
+			if(aux.indexOf("write")>0){
+				String y= antecedentes.nextToken();
+				while(y.indexOf(")")<0){
+					aux=aux+" "+y;
+					y= antecedentes.nextToken();
+				}
+				aux=aux+" "+y;
+				List.Inserta(aux);
+			}
+			else {
+				if (aux.indexOf(")")>0)
+					List.Inserta(aux);
+				else{
+					String unir = antecedentes.nextToken();
+					while(unir.indexOf(")")<0){
+					aux=aux+","+unir;
+					unir= antecedentes.nextToken();}
+				aux= aux+","+unir;
+				List.Inserta(aux);}}}}
+	//Obtiene el ultimo nodo añadido para separar el punto
+	String ultimo = List.buscarUltimo();
+	System.out.println(ultimo);
+	List.EliminaFinal();
+	StringTokenizer punto = new StringTokenizer(ultimo,".");
+	//Regresa el ultimo antecedente, que se quito de la lista
+	while(punto.hasMoreTokens()){
+		String y =punto.nextToken();
+		System.out.println(y);
+		List.Inserta(y);}
+	//Ingresa el punto como un nuevo nodo en la lista
+	List.Inserta(".");
+	List.Imprimir();
+	return List;
+}
+
+public ListaDoble separarHechos(String linea){
+	ListaDoble List = new ListaDoble();
+	StringTokenizer hecho = new StringTokenizer(linea,".");
+	List.Inserta(hecho.nextToken());
+	List.Inserta(".");
+	List.Imprimir();
+	return List;
+}
+
 }//Fin de la clase

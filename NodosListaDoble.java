@@ -8,6 +8,7 @@ class NodosListaDoble {
      String argumento;
      NodosListaDoble siguiente;
      NodosListaDoble anterior;
+     ListaDoble lista;
 
 //Construtor 
  NodosListaDoble (String reg, String arg)
@@ -26,6 +27,29 @@ NodosListaDoble (String reg, String arg, NodosListaDoble signodo)
     siguiente = signodo; //siguiente se refiere al siguiente nodo
 }
 
+NodosListaDoble (String x){
+	argumento = x;
+	siguiente = null; 
+    anterior = null;
+}
+
+NodosListaDoble (ListaDoble list){
+	lista = list;
+	siguiente = null; 
+    anterior = null;
+}
+
+NodosListaDoble (String x, NodosListaDoble signodo){
+	argumento = x; 
+    anterior = null;
+    siguiente = signodo; 
+}
+
+NodosListaDoble (ListaDoble list, NodosListaDoble signodo){
+	lista = list;
+    anterior = null;
+    siguiente = signodo; 
+}
 
 //Retorna el dato que se encuentra en este nodo
 Object getObject() {return regla; }
