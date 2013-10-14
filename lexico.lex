@@ -27,6 +27,7 @@ class Yytoken{
 
 PALABRAS = [a-zA-Z]+
 NUMEROS = [0-9]*
+espacio = \t|\f|" "|\r|\n
 
 %%
 
@@ -36,19 +37,17 @@ NUMEROS = [0-9]*
 "("  {}
 ")"  {}
 "."  {}
-"|:" {}
+":-" {}
 ","  {}
 ";"  {}
 " "  {}
 
-[\n] {yychar = 0;}
+{espacio} {yychar = 0;}
 
 .
 {
 	yychar1 =1;
 	System.out.println("error lexico en " + yyline +" , " + yychar + " No se reconoce " + yytext());
 	yychar =0;
-	
-	
 }
 

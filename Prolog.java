@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.Console;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,7 +14,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Prolog {
-	public static ArrayList base = new ArrayList();
+	public static ListaDoble BaseDeConocimiento = new ListaDoble(); // lista que guardara la base de conocimiento
 	
     public static void main(String args[]) throws Exception {
     	menu();
@@ -22,14 +23,14 @@ public class Prolog {
     /*menu()
     Inicia el programa, permite al usuario ingresar los datos que desea
     Si el usuario desea modificar la base de conocimientos, debe ingresar "[user]."
-    Y si desea realizar una consulta, debe escribirla según 
+    Y si desea realizar una consulta, debe escribirla según corresponda
     */
-    public static void menu() {
+    public static void menu() throws Exception {
 		try {
 			String dato = "";
 	    	String base = "[user].";
 	    	BufferedReader lectura = new BufferedReader(new InputStreamReader (System.in));
-			System.out.println("?- ");
+			System.out.println("\n ?- ");
 			dato = lectura.readLine();
 			if(dato.equals(base)){
 				baseConocimiento();
@@ -44,42 +45,86 @@ public class Prolog {
     /* baseConocimiento()
     Permite que el usuario ingresa reglas o hechos a la base de conocimientos
     */
-    public static void baseConocimiento() throws IOException{
+    public static void baseConocimiento() throws Exception{
     	try{
-	    	System.out.println("|: ");
+	    	System.out.println("|:");
 	    	InputStreamReader isr = new InputStreamReader(System.in);
 	        BufferedReader br = new BufferedReader(isr);
 	        String dato = br.readLine() + "\n";
-	        String dato1 = "[exit]."+ "\n"; ;
+	        String dato1 = "[exit]."+ "\n";
 	        if(dato.equals(dato1.toString()))
-	        	System.exit(0);
+	        	menu();
 	        
-		        FileWriter fichero = (new FileWriter("/home/vero/Escritorio/archivo"));
+	        else{
+		        FileWriter fichero = (new FileWriter("/home/vero/Escritorio/nuevo"));
 		        PrintWriter p = new PrintWriter(fichero);
-		        fichero.write(dato);
-		        p.print(dato);
-		        fichero.append("hdowe");
-		        fichero.write("");
+		        p.print(dato+"\n");
 		        fichero.close();
 		        
 		        Analex a = new Analex();
-		        int numero = a.main(dato);
-		        System.out.println(numero);
 		        
-		        if(numero == 1){
-		        	System.out.println("ENCONTRO ERROR");
-		        }
-		        else{
-		        	System.out.println("bien");
-		        	base.add(dato);
-		        }
+		        int numero = a.main(dato);
+		        if(numero == 1){;}
+		        else{sintactico();}
+		        
 		        baseConocimiento();
+	        }
     	}
     	catch (IOException e){
     		System.exit(0);
     	}
         
     	
+    }
+    
+    /*Funcion: ingresarReglas()
+     * Esta funcion se encarga de agregar la regla ingresada por el usuario
+     * a la base de conocimientos
+     * El dato se encuentra en el archivo "nuevo", y lo guarda en una listaDoble
+     * llamada BaseDeConocimiento*/
+    public static void ingresarReglas(){
+    	System.out.println("Ingresar reglas a la base");
+    }
+    
+    /*Funcion: ingresarHechos()
+     * Esta funcion se encarga de agregar los hechos ingresada por el usuario
+     * a la base de conocimientos
+     * El dato se encuentra en el archivo "nuevo", y lo guarda en una listaDoble
+     * llamada BaseDeConocimiento*/
+    public static void ingresarHechos(){
+    	System.out.println("Ingresar hechos a la base");
+    }
+    
+    public static void sintactico() throws Exception{
+    	parser p = new parser();
+		p.main("");
+    	
+		FileReader fichero = (new FileReader("/home/vero/Escritorio/reglas.txt"));
+		if(fichero.read()<0)
+			ingresarReglas();
+		else{
+			sintactico s = new sintactico();
+			s.main("");
+			
+			FileReader fr = (new FileReader("/home/vero/Escritorio/hechos.txt"));
+			if(fr.read()<0){
+				FileWriter fichero1 = (new FileWriter("/home/vero/Escritorio/reglas.txt"));
+				fichero1.write("");
+				ingresarHechos();
+			}
+			else{
+				BufferedReader lectura = new BufferedReader(fichero);
+				while(lectura.ready()){
+					String linea;
+					if(!(linea=lectura.readLine()).equals("\000"))
+						System.err.println("Err"+linea);
+				}
+				FileWriter fichero1 = (new FileWriter("/home/vero/Escritorio/reglas.txt"));
+				fichero1.write("");
+				FileWriter fichero2 = (new FileWriter("/home/vero/Escritorio/hechos.txt"));
+				fichero2.write("");
+			}
+		}
     }
     
     /*consulta

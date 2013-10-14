@@ -1,23 +1,17 @@
-import java.io.FileReader;
-import java.lang.System;
-
-public class Analex{
-	public static int main (String dato) throws java.io.IOException{
-		FileReader fr = new FileReader("/home/vero/Escritorio/nuevo");
-		Ylex yy = new Ylex (fr);
-		if (yy.yylex() != 0 || yy.yylex() == 0){
-			return yy.yychar1;}
-		return yy.yychar1;
-		}
-	}
-
-class Ytoken{
-	Ytoken(){};
-}
+import java_cup.runtime.Symbol;
+/*
+Directivas:
+public: clase publica
+cup: compatibilidad con cup
+full: extender el alfabeto con todos los valores de 8 bits
+line: agrega la variable int yyline, para indicar la fila del lexema
+char: agrega la variable int yychar, indica el indice del primer caracter del lexema
+ignorecase: validar, indistitntamente si la letra es mayuscula o minuscula
+eofval: especifica un valor de retorno al final del archivo
+*/
 
 
-class Ylex {
-	public int yychar1;
+class Yylex implements java_cup.runtime.Scanner {
 	private final int YY_BUFFER_SIZE = 512;
 	private final int YY_F = -1;
 	private final int YY_NO_STATE = -1;
@@ -25,8 +19,8 @@ class Ylex {
 	private final int YY_START = 1;
 	private final int YY_END = 2;
 	private final int YY_NO_ANCHOR = 4;
-	private final int YY_BOL = 128;
-	private final int YY_EOF = 129;
+	private final int YY_BOL = 256;
+	private final int YY_EOF = 257;
 	private java.io.BufferedReader yy_reader;
 	private int yy_buffer_index;
 	private int yy_buffer_read;
@@ -38,7 +32,7 @@ class Ylex {
 	private boolean yy_at_bol;
 	private int yy_lexical_state;
 
-	Ylex (java.io.Reader reader) {
+	Yylex (java.io.Reader reader) {
 		this ();
 		if (null == reader) {
 			throw (new Error("Error: Bad input stream initializer."));
@@ -46,7 +40,7 @@ class Ylex {
 		yy_reader = new java.io.BufferedReader(reader);
 	}
 
-	Ylex (java.io.InputStream instream) {
+	Yylex (java.io.InputStream instream) {
 		this ();
 		if (null == instream) {
 			throw (new Error("Error: Bad input stream initializer."));
@@ -54,7 +48,7 @@ class Ylex {
 		yy_reader = new java.io.BufferedReader(new java.io.InputStreamReader(instream));
 	}
 
-	private Ylex () {
+	private Yylex () {
 		yy_buffer = new char[YY_BUFFER_SIZE];
 		yy_buffer_read = 0;
 		yy_buffer_index = 0;
@@ -232,22 +226,18 @@ class Ylex {
 		/* 7 */ YY_NO_ANCHOR,
 		/* 8 */ YY_NO_ANCHOR,
 		/* 9 */ YY_NO_ANCHOR,
-		/* 10 */ YY_NO_ANCHOR,
-		/* 11 */ YY_NO_ANCHOR,
-		/* 12 */ YY_NO_ANCHOR,
-		/* 13 */ YY_NO_ANCHOR
+		/* 10 */ YY_NO_ANCHOR
 	};
-	private int yy_cmap[] = unpackFromString(1,130,
-"12:9,11:2,12,11:2,12:18,10,12:7,3,4,12:2,8,7,5,12,2:10,6,9,12:5,1:26,12:6,1" +
-":26,12:5,0:2")[0];
+	private int yy_cmap[] = unpackFromString(1,258,
+"9:9,8:2,9,8:2,9:18,8,9:7,2,3,9:2,1,6,4,9:11,5,9:6,7:26,9:6,7:26,9:133,0:2")[0];
 
-	private int yy_rmap[] = unpackFromString(1,14,
-"0,1,2,1:3,3,1:5,4,1")[0];
+	private int yy_rmap[] = unpackFromString(1,11,
+"0,1:5,2,1:2,3,1")[0];
 
-	private int yy_nxt[][] = unpackFromString(5,13,
-"1,2,12,3,4,5,6,13,7,8,9,10,13,-1:14,2,-1:18,11,-1:7,12,-1:10");
+	private int yy_nxt[][] = unpackFromString(4,10,
+"1,2,3,4,5,6,10,9,7,10,-1:16,8,-1:10,9,-1:2");
 
-	public int yylex ()
+	public java_cup.runtime.Symbol next_token ()
 		throws java.io.IOException {
 		int yy_lookahead;
 		int yy_anchor = YY_NO_ANCHOR;
@@ -270,7 +260,7 @@ class Ylex {
 			yy_next_state = yy_nxt[yy_rmap[yy_state]][yy_cmap[yy_lookahead]];
 			if (YY_EOF == yy_lookahead && true == yy_initial) {
 
-	{System.exit(0);}
+	return new Symbol(sym.EOF,new String("Fin del archivo"));
 			}
 			if (YY_F != yy_next_state) {
 				yy_state = yy_next_state;
@@ -293,7 +283,7 @@ class Ylex {
 					yy_to_mark();
 					switch (yy_last_accept_state) {
 					case 0:
-						{}
+						{return new Symbol(sym.LETRA, yychar, yyline, yytext());}
 					case -2:
 						break;
 					case 1:
@@ -301,28 +291,23 @@ class Ylex {
 					case -3:
 						break;
 					case 2:
-						{}
+						{return new Symbol(sym.COMA, yychar, yyline, yytext());}
 					case -4:
 						break;
 					case 3:
-						{}
+						{return new Symbol(sym.PARIZQ, yychar, yyline, yytext());}
 					case -5:
 						break;
 					case 4:
-						{}
+						{return new Symbol(sym.PARDER, yychar, yyline, yytext());}
 					case -6:
 						break;
 					case 5:
-						{}
+						{return new Symbol(sym.PUNTO, yychar, yyline, yytext());}
 					case -7:
 						break;
 					case 6:
-						{
-	yychar1 =1;
-	System.err.println("error lexico en " + yyline +" , " + yychar + " No se reconoce " + yytext());
-	yychar =0;
-	return yychar1;
-}
+						{ System.out.println("Caracter ilegal: " + yytext()); }
 					case -8:
 						break;
 					case 7:
@@ -330,33 +315,16 @@ class Ylex {
 					case -9:
 						break;
 					case 8:
-						{}
+						{return new Symbol(sym.SEPARADOR, yychar, yyline, yytext());}
 					case -10:
 						break;
 					case 9:
-						{}
+						{return new Symbol(sym.LETRA, yychar, yyline, yytext());}
 					case -11:
 						break;
 					case 10:
-						{return yychar1;}
+						{ System.out.println("Caracter ilegal: " + yytext()); }
 					case -12:
-						break;
-					case 11:
-						{}
-					case -13:
-						break;
-					case 12:
-						{}
-					case -14:
-						break;
-					case 13:
-						{
-	yychar1 =1;
-	System.err.println("error lexico en " + yyline +" , " + yychar + " No se reconoce " + yytext());
-	yychar =0;
-	return yychar1;
-}
-					case -15:
 						break;
 					default:
 						yy_error(YY_E_INTERNAL,false);
