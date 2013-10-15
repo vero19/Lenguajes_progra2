@@ -18,4 +18,3 @@ public class sym {
   public static final int PARDER = 6;
   public static final int COMILLA = 8;
 }
-
