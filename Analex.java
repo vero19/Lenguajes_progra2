@@ -3,7 +3,7 @@ import java.lang.System;
 
 public class Analex{
 	public static int main (String dato) throws java.io.IOException{
-		FileReader fr = new FileReader("/home/vero/Escritorio/nuevo");
+		FileReader fr = new FileReader("nuevo");
 		Ylex yy = new Ylex (fr);
 		if (yy.yylex() != 0 || yy.yylex() == 0){
 			return yy.yychar1;}
