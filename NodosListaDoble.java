@@ -1,5 +1,4 @@
 
-
 // Clase NodosListaD
 class NodosListaDoble {
  // datos amigables para que la Clase Lista Tenga un acceso directo
@@ -58,4 +57,3 @@ Object getObject() {return regla; }
 NodosListaDoble getnext() {return siguiente; }
 
 }//Final de la Clase NodosLista
-
