@@ -99,10 +99,7 @@ public class Prolog {
      * llamada BaseDeConocimiento*/
     public static void ingresarHechos(String dato){
     	ListaDoble ListaPredicado= new ListaDoble();
-    	//ListaBase.Inserta(dato);
-    	
-		ListaBase.InsertaLista(ListaPredicado.separarHechos(dato));
-		ListaBase.Imprimir();
+    	ListaBase.InsertaLista(ListaPredicado.separarHechos(dato));
 		
     }
     
@@ -138,16 +135,5 @@ public class Prolog {
 		}
     }
     
-    /*consulta
-    Realiza la consulta, según el dato ingresado por el usuario anteriormente
-    */
-    private static void consulta(String dato) throws Exception{
-    	String consulta = "";
-    	BufferedReader lec = new BufferedReader(new InputStreamReader (System.in));
-		
-		menu();
-    	
-    }
+   
     
-    
-}

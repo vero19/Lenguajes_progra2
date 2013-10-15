@@ -401,4 +401,3 @@ class CUP$parser$actions {
         }
     }
 }
-
