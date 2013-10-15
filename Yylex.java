@@ -226,16 +226,18 @@ class Yylex implements java_cup.runtime.Scanner {
 		/* 7 */ YY_NO_ANCHOR,
 		/* 8 */ YY_NO_ANCHOR,
 		/* 9 */ YY_NO_ANCHOR,
-		/* 10 */ YY_NO_ANCHOR
+		/* 10 */ YY_NO_ANCHOR,
+		/* 11 */ YY_NO_ANCHOR
 	};
 	private int yy_cmap[] = unpackFromString(1,258,
-"9:9,8:2,9,8:2,9:18,8,9:7,2,3,9:2,1,6,4,9:11,5,9:6,7:26,9:6,7:26,9:133,0:2")[0];
+"10:9,9:2,10,9:2,10:18,9,10:6,2,3,4,10:2,1,7,5,10,8:10,6,10:6,8:26,10:6,8:26" +
+",10:133,0:2")[0];
 
-	private int yy_rmap[] = unpackFromString(1,11,
-"0,1:5,2,1:2,3,1")[0];
+	private int yy_rmap[] = unpackFromString(1,12,
+"0,1:6,2,1:2,3,1")[0];
 
-	private int yy_nxt[][] = unpackFromString(4,10,
-"1,2,3,4,5,6,10,9,7,10,-1:16,8,-1:10,9,-1:2");
+	private int yy_nxt[][] = unpackFromString(4,11,
+"1,2,3,4,5,6,7,11,10,8,11,-1:18,9,-1:11,10,-1:2");
 
 	public java_cup.runtime.Symbol next_token ()
 		throws java.io.IOException {
@@ -295,36 +297,40 @@ class Yylex implements java_cup.runtime.Scanner {
 					case -4:
 						break;
 					case 3:
-						{return new Symbol(sym.PARIZQ, yychar, yyline, yytext());}
+						{return new Symbol(sym.COMILLA, yychar, yyline, yytext());}
 					case -5:
 						break;
 					case 4:
-						{return new Symbol(sym.PARDER, yychar, yyline, yytext());}
+						{return new Symbol(sym.PARIZQ, yychar, yyline, yytext());}
 					case -6:
 						break;
 					case 5:
-						{return new Symbol(sym.PUNTO, yychar, yyline, yytext());}
+						{return new Symbol(sym.PARDER, yychar, yyline, yytext());}
 					case -7:
 						break;
 					case 6:
-						{ System.out.println("Caracter ilegal: " + yytext()); }
+						{return new Symbol(sym.PUNTO, yychar, yyline, yytext());}
 					case -8:
 						break;
 					case 7:
-						{}
+						{ }
 					case -9:
 						break;
 					case 8:
-						{return new Symbol(sym.SEPARADOR, yychar, yyline, yytext());}
+						{}
 					case -10:
 						break;
 					case 9:
-						{return new Symbol(sym.LETRA, yychar, yyline, yytext());}
+						{return new Symbol(sym.SEPARADOR, yychar, yyline, yytext());}
 					case -11:
 						break;
 					case 10:
-						{ System.out.println("Caracter ilegal: " + yytext()); }
+						{return new Symbol(sym.LETRA, yychar, yyline, yytext());}
 					case -12:
+						break;
+					case 11:
+						{  }
+					case -13:
 						break;
 					default:
 						yy_error(YY_E_INTERNAL,false);
